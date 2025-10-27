@@ -3,9 +3,36 @@
 #include "CommunicationSystem.h"
 #include "Ringbuffer.h"
 #include <thread>   
+#include <random>
+#include <string>    // for std::string
 
-// Sender
 
+using namespace std;
+
+// Not yet in use
+void RandomFreqGen(CommunicationSystem& rcomm)
+{
+    int Db = 0;
+    float Freq = 0;
+
+    string strDB;
+    string strFreq;
+    string strMessage;
+
+    while (true)
+    {
+        Db = rand() % 100;           // Random value between 0 and 99
+        Freq = static_cast<float>(rand() % 100); // Random float
+
+        strDB = to_string(Db);
+        strFreq = to_string(Freq);
+
+        strMessage = strDB + " " + strFreq;
+
+        rcomm.sendData(reinterpret_cast<const uint8_t*>(strMessage.c_str()), strMessage.length());
+
+    }
+}
 
 int main() {
     // Create a communication system to send/receive data
@@ -43,6 +70,9 @@ int main() {
 
 
             const uint8_t* message = reinterpret_cast<const uint8_t*>(str.c_str());
+
+     
+
             comm.sendData(message, str.size());
         }
 

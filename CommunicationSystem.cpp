@@ -37,7 +37,6 @@ void CommunicationSystem::setupSocket()
     // Setup remote address for sending
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
-    //serverAddr.sin_family = 192.168.0.24';
 
     serverAddr.sin_port = htons(port);
 
@@ -52,7 +51,7 @@ void CommunicationSystem::setupSocket()
 
 
 void CommunicationSystem::sendData(const uint8_t* data, size_t len) {
-    // Step 1: Write incoming data to the buffer
+    // Step 1: Write outgoing data to the buffer
     buffer.write(data, len);
 
     // Step 2: Prepare a temporary array to hold buffered data
@@ -61,8 +60,7 @@ void CommunicationSystem::sendData(const uint8_t* data, size_t len) {
     // Step 3: Read from the buffer into tempBuffer
     size_t bytesToSend = buffer.read(tempBuffer, sizeof(tempBuffer));
 
-
-    std::cout << "bytes to send = " << bytesToSend << "\n";
+    std::cout << "bytes ready to send = " << bytesToSend << "\n";
 
     // Step 4: Send the buffered data over UDP
     if (bytesToSend > 0) 
@@ -84,10 +82,6 @@ void CommunicationSystem::sendData(const uint8_t* data, size_t len) {
 // Receive data from UDP socket
 void CommunicationSystem::read() 
 {
-    // TEMP 
-    //const uint8_t message[] = "Hello, Real-Time Communication!";
-    //sendData(message, sizeof(message));
-    // END TEMP
 
     uint8_t recvBuffer[1024];
     int receivedBytes = recvfrom(socket_fd, reinterpret_cast<char*>(recvBuffer), sizeof(recvBuffer), 0, nullptr, nullptr);
@@ -95,10 +89,6 @@ void CommunicationSystem::read()
     if (receivedBytes > 0) 
     {
         std::cout << "Received: " << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
-
-        buffer.write(recvBuffer, receivedBytes); // Store in buffer
-        std::cout << "Received and buffered: \n\n" << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
-     
     }
 }
 

@@ -18,6 +18,7 @@ public:
         size_t bytesWritten = 0;
         for (size_t i = 0; i < len && ((tail + 1) % capacity != head); ++i) 
         {
+            //Add the requested data to the buffer providing not filled up ring buffer
             buffer[tail] = data[i];
             tail = (tail + 1) % capacity;
             ++bytesWritten;
@@ -30,6 +31,7 @@ public:
         size_t bytesRead = 0;
         while (head != tail && bytesRead < maxLen) 
         {
+            //read requested number of bytes, place in outData, stop if head == tail
             outData[bytesRead] = buffer[head];
             head = (head + 1) % capacity;
             ++bytesRead;

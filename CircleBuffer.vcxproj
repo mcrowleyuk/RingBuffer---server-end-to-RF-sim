@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommunicationSystem.cpp" />
     <ClCompile Include="CommunicationSystem.h" />
     <ClCompile Include="RingBuffer.cpp" />
   </ItemGroup>

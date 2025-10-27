@@ -27,75 +27,15 @@ public:
     }
 
     // Initialize UDP socket
-    void setupSocket() {
-        socket_fd = socket(
-            AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-        if (socket_fd == INVALID_SOCKET) {
-            std::cerr << "Failed to create socket" << std::endl;
-            exit(EXIT_FAILURE);
-        }
+    void setupSocket();
 
-        memset(&serverAddr, 0, sizeof(serverAddr));
-        serverAddr.sin_family = AF_INET;
-        serverAddr.sin_port = htons(port);
 
-        if (InetPtonA(AF_INET, ip.c_str(), &serverAddr.sin_addr) != 1) {
-            std::cerr << "Invalid IP address format" << std::endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    // Send data using UDP
-    /*void sendData(const uint8_t* data, size_t len) {
-        size_t bytesWritten = buffer.write(data, len);
-        if (bytesWritten > 0) {
-            int sentBytes = sendto(socket_fd, reinterpret_cast<const char*>(data), static_cast<int>(bytesWritten), 0,
-                reinterpret_cast<sockaddr*>(&serverAddr), sizeof(serverAddr));
-            if (sentBytes == SOCKET_ERROR) {
-                std::cerr << "Failed to send data" << std::endl;
-            }
-        }
-    }*/
-
-    void sendData(const uint8_t* data, size_t len) {
-        // Step 1: Write incoming data to the buffer
-        buffer.write(data, len);
-
-        // Step 2: Prepare a temporary array to hold buffered data
-        uint8_t tempBuffer[1024];
-
-        // Step 3: Read from the buffer into tempBuffer
-        size_t bytesToSend = buffer.read(tempBuffer, sizeof(tempBuffer));
-
-        // Step 4: Send the buffered data over UDP
-        if (bytesToSend > 0) {
-            int sentBytes = sendto(socket_fd,
-                reinterpret_cast<const char*>(tempBuffer),
-                static_cast<int>(bytesToSend),
-                0,
-                reinterpret_cast<sockaddr*>(&serverAddr),
-                sizeof(serverAddr));
-            if (sentBytes == SOCKET_ERROR) {
-                std::cerr << "Failed to send data" << std::endl;
-            }
-        }
-    }
-
+    void sendData(const uint8_t* data, size_t len);
 
     // Receive data from UDP socket
-    void read() {
-        uint8_t recvBuffer[1024];
-        int receivedBytes = recvfrom(socket_fd, reinterpret_cast<char*>(recvBuffer), sizeof(recvBuffer), 0, nullptr, nullptr);
-        if (receivedBytes > 0) {
-            std::cout << "Received: " << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
-        
-            // MAYBE THIS
-            buffer.write(recvBuffer, receivedBytes); // Store in buffer
-            std::cout << "Received and buffered: " << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
-            //
-        
-        }
-    }
+    void read();
+
+    void listen();
 
 private:
     SOCKET socket_fd;

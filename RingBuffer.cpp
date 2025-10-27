@@ -28,7 +28,7 @@ int main() {
     while (!bExit)
     {
         std::string str;
-        std::cout << "Enter a message to send or Q to quit";
+        std::cout << "Enter a message to send or Q to quit: ";
 
         std::cin >> str;
 
@@ -50,7 +50,6 @@ int main() {
     
 
     t.join();
-    t.detach();
     exit(0);
     return 0;
 }

@@ -13,9 +13,11 @@ class RingBuffer {
 public:
     RingBuffer(size_t size) : buffer(size), head(0), tail(0), capacity(size) {}
 
-    size_t write(const uint8_t* data, size_t len) {
+    size_t write(const uint8_t* data, size_t len) 
+    {
         size_t bytesWritten = 0;
-        for (size_t i = 0; i < len && ((tail + 1) % capacity != head); ++i) {
+        for (size_t i = 0; i < len && ((tail + 1) % capacity != head); ++i) 
+        {
             buffer[tail] = data[i];
             tail = (tail + 1) % capacity;
             ++bytesWritten;
@@ -23,9 +25,11 @@ public:
         return bytesWritten;
     }
 
-    size_t read(uint8_t* outData, size_t maxLen) {
+    size_t read(uint8_t* outData, size_t maxLen) 
+    {
         size_t bytesRead = 0;
-        while (head != tail && bytesRead < maxLen) {
+        while (head != tail && bytesRead < maxLen) 
+        {
             outData[bytesRead] = buffer[head];
             head = (head + 1) % capacity;
             ++bytesRead;

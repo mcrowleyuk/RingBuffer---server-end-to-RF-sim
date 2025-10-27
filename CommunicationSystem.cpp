@@ -37,6 +37,8 @@ void CommunicationSystem::setupSocket()
     // Setup remote address for sending
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
+    //serverAddr.sin_family = 192.168.0.24';
+
     serverAddr.sin_port = htons(port);
 
     if (InetPtonA(AF_INET, ip.c_str(), &serverAddr.sin_addr) != 1)
@@ -82,9 +84,9 @@ void CommunicationSystem::sendData(const uint8_t* data, size_t len) {
 // Receive data from UDP socket
 void CommunicationSystem::read() 
 {
-    // TEMP
-    const uint8_t message[] = "Hello, Real-Time Communication!";
-    sendData(message, sizeof(message));
+    // TEMP 
+    //const uint8_t message[] = "Hello, Real-Time Communication!";
+    //sendData(message, sizeof(message));
     // END TEMP
 
     uint8_t recvBuffer[1024];
@@ -95,7 +97,7 @@ void CommunicationSystem::read()
         std::cout << "Received: " << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
 
         buffer.write(recvBuffer, receivedBytes); // Store in buffer
-        std::cout << "Received and buffered: " << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
+        std::cout << "Received and buffered: \n\n" << std::string(reinterpret_cast<char*>(recvBuffer), receivedBytes) << std::endl;
      
     }
 }
@@ -103,7 +105,7 @@ void CommunicationSystem::read()
 
 void CommunicationSystem::listen()
 {
-    std::cout << "listening....";
+    std::cout << "listening in background\n\n\n....";
     // Receive data
     while (true)
     {

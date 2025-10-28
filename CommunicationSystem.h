@@ -13,7 +13,7 @@
 // Communication System using UDP
 class CommunicationSystem {
 public:
-    CommunicationSystem(const std::string& ip, uint16_t port) : buffer(1024), ip(ip), port(port) {
+    CommunicationSystem(const std::string& ip, uint16_t port) : send_buffer(1024), receive_buffer(1024), ip(ip), port(port) {
         if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
             std::cerr << "WSAStartup failed" << std::endl;
             exit(EXIT_FAILURE);
@@ -42,6 +42,7 @@ private:
     sockaddr_in serverAddr;
     std::string ip;
     uint16_t port;
-    RingBuffer buffer;
+    RingBuffer send_buffer;
+    RingBuffer receive_buffer;
     WSADATA wsaData;
 };

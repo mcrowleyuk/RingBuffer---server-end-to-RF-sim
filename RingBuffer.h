@@ -33,6 +33,7 @@ public:
         {
             //read requested number of bytes, place in outData, stop if head == tail
             outData[bytesRead] = buffer[head];
+            //std::cout << "buffer count is " << buffer.size() << "\n";
             head = (head + 1) % capacity;
             ++bytesRead;
         }

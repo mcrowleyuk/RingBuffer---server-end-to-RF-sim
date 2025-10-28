@@ -30,7 +30,8 @@ void RandomFreqGen(CommunicationSystem& rcomm)
         strMessage = strDB + " " + strFreq;
 
         rcomm.sendData(reinterpret_cast<const uint8_t*>(strMessage.c_str()), strMessage.length());
-
+        // no exit!
+        Sleep(10);
     }
 }
 
@@ -46,10 +47,21 @@ int main() {
 
     std::cin >> ip;
 
+    int iChoice = 1;
 
     CommunicationSystem comm(ip, 8080); // check IP is correct 
    
     std::thread t(&CommunicationSystem::listen, &comm);
+
+    cout << "Send 1) Text Messages or 2) Random Number Generator : ";
+
+    std::cin >> iChoice;
+
+    if (iChoice == 2)
+    {
+        RandomFreqGen(comm);
+        exit(0); // will never reach this but okay for now
+    }
 
 
     while (!bExit)

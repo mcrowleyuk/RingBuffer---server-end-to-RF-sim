@@ -11,34 +11,23 @@
 // Dummy RingBuffer class for demonstration
 class RingBuffer {
 public:
-    RingBuffer(size_t size) : buffer(size), head(0), tail(0), capacity(size) {}
+    RingBuffer(size_t size) : buffer(size), head(0), tail(0), capacity(size) {};
 
-    size_t write(const uint8_t* data, size_t len) 
-    {
-        size_t bytesWritten = 0;
-        for (size_t i = 0; i < len && ((tail + 1) % capacity != head); ++i) 
-        {
-            //Add the requested data to the buffer providing not filled up ring buffer
-            buffer[tail] = data[i];
-            tail = (tail + 1) % capacity;
-            ++bytesWritten;
-        }
-        return bytesWritten;
-    }
 
-    size_t read(uint8_t* outData, size_t maxLen) 
-    {
-        size_t bytesRead = 0;
-        while (head != tail && bytesRead < maxLen) 
-        {
-            //read requested number of bytes, place in outData, stop if head == tail
-            outData[bytesRead] = buffer[head];
-            //std::cout << "buffer count is " << buffer.size() << "\n";
-            head = (head + 1) % capacity;
-            ++bytesRead;
-        }
-        return bytesRead;
-    }
+    RingBuffer(RingBuffer& rRingBuffer) = delete; // force move semantics instead - see below
+
+    RingBuffer(RingBuffer&& rvRingBuffer) = delete; // to be implemented in due course
+
+    RingBuffer& operator=(RingBuffer& rRingBuffer) = delete; // force move semantics instead - see below
+
+    RingBuffer& operator=(RingBuffer&& rvRingBuffer); // this operator implemented
+
+
+    // Main buffer read and write methods.
+
+    const size_t write(const uint8_t* data, size_t len);
+
+    const size_t read(uint8_t* outData, size_t maxLen);
 
 
 private:

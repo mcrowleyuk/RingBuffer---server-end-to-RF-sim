@@ -18,10 +18,13 @@
     <ClCompile Include="CommunicationSystem.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RingBuffer.cpp">
+    <ClCompile Include="RingBufferMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CommunicationSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RingBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

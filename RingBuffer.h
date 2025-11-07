@@ -14,13 +14,13 @@ public:
     RingBuffer(size_t size) : buffer(size), head(0), tail(0), capacity(size) {};
 
 
-    RingBuffer(RingBuffer& rRingBuffer) = delete; // force move semantics instead - see below
+    RingBuffer(RingBuffer& rRingBuffer);  
 
-    RingBuffer(RingBuffer&& rvRingBuffer) = delete; // to be implemented in due course
+    RingBuffer(RingBuffer&& rvRingBuffer); // move constructor
 
     RingBuffer& operator=(RingBuffer& rRingBuffer) = delete; // force move semantics instead - see below
 
-    RingBuffer& operator=(RingBuffer&& rvRingBuffer); // this operator implemented
+    RingBuffer& operator=(RingBuffer&& rvRingBuffer); // move assignment operator
 
 
     // Main buffer read and write methods.

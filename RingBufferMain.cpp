@@ -8,7 +8,9 @@
 #include <future>
 #include <chrono>
 
-
+const int DEFAULT_BASE = -75;
+const int JITTERMINUS = -4;
+const int JITTERPLUS = +4;
 
 using namespace std;
 
@@ -17,21 +19,31 @@ void RandomFreqGen(CommunicationSystem& rcomm)
 {
     int Db = 0;
     float Freq = 0;
+    int dBmA = 0;
+    int iBase = DEFAULT_BASE; 
 
     string strDB;
     string strFreq;
     string strMessage;
 
+    int signal_strength = 0;
+    std::vector<int> frequencies = { 2400, 2450, 2500 };
+
+    cout << "dBm base =  (eg -75) \n";
+    cin >> dBmA;
+    
+
+
     while (true)
     {
-      
-        std::srand(static_cast<unsigned int>(std::time(nullptr))); // Seed RNG
+        std::random_device rd;  // Non-deterministic seed
+        std::mt19937 gen(rd()); // Mersenne Twister engine
+        std::uniform_int_distribution<> jitter(JITTERMINUS, JITTERPLUS);
 
-        // Generate signal strength between -100 and -50
-        int signal_strength = -100 + std::rand() % 51; // rand() % (max - min + 1)
+        signal_strength = iBase + jitter(gen);
 
         // Choose a random frequency from the list
-        std::vector<int> frequencies = { 2400, 2450, 2500 };
+       
         int frequency = frequencies[std::rand() % frequencies.size()];
 
     
@@ -54,7 +66,7 @@ int main() {
 
     bool bExit = false;
 
-    std::cout << "Enter IP address to send to: ";
+    std::cout << "Enter IP address to send to: (comms port is 8082)";
 
     std::cin >> ip;
 

@@ -33,4 +33,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\RF Python UI\PythonApplication1\RFSimAppl.py">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

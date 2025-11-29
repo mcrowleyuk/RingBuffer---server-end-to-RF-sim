@@ -7,7 +7,7 @@ const size_t RingBuffer::write(const uint8_t* data, size_t len)
     {
         //Add the requested data to the buffer providing not filled up ring buffer
         buffer[tail] = data[i];
-        tail = (tail + 1) % capacity;
+        tail = (tail + 1) % capacity; // tail will be 0 when mod against max capacity (no remainder)
         ++bytesWritten;
     }
     return bytesWritten;

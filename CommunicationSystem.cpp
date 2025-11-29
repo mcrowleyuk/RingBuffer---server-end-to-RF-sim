@@ -88,7 +88,7 @@ void CommunicationSystem::read()
     uint8_t temp_read_buffer[1024]; // buffer for temp read back from ring buffer
 
     int receivedBytes = recvfrom(socket_fd, reinterpret_cast<char*>(recv_buffer), sizeof(recv_buffer), 0, nullptr, nullptr);
-    //std::cout << "number of received bytes = " << receivedBytes << "\n";
+    std::cout << "number of received bytes = " << receivedBytes << "\n";
     
     
     //now write this to the receive ring buffer (a vector of buffers)

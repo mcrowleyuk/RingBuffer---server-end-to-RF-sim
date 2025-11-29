@@ -28,7 +28,7 @@ public:
     }
 
     CommunicationSystem(CommunicationSystem& r) = delete;
-    CommunicationSystem(CommunicationSystem&& rv) = delete
+    CommunicationSystem(CommunicationSystem&& rv) = delete;
     CommunicationSystem& operator=(CommunicationSystem & r) = delete; 
     CommunicationSystem& operator=(CommunicationSystem && rv)= delete; 
         
